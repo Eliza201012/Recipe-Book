@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Sign Up — RecipeBook{% endblock %}
+
+{% block content %}
+<div class="bg-white/50 backdrop-blur-lg p-10 rounded-3xl shadow-xl w-full max-w-md">
+  <h1 class="text-3xl font-bold text-center mb-6 text-emerald-700">Create Account</h1>
+
+  <form method="POST" class="space-y-5">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit"
+      class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition">
+      Register
+    </button>
+  </form>
+
+  <p class="text-center mt-6 text-gray-700">
+    Already have an account?
+    <a href="{% url 'login' %}" class="text-emerald-700 hover:underline">Login here</a>
+  </p>
+</div>
+{% endblock %}
