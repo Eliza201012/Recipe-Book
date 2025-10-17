@@ -14,6 +14,28 @@
 </head>
 <body class="min-h-screen flex flex-col bg-gradient-to-br from-amber-50 via-orange-100 to-emerald-100 font-sans text-gray-800">
 
+    <!-- 🌸 Flash Messages -->
+  {% if messages %}
+    <div class="fixed top-5 right-5 space-y-2 z-50">
+      {% for message in messages %}
+        <div
+          class="px-6 py-3 rounded-xl shadow-lg text-white text-sm font-semibold
+          {% if message.tags == 'success' %}
+            bg-green-500
+          {% elif message.tags == 'error' %}
+            bg-red-500
+          {% elif message.tags == 'warning' %}
+            bg-yellow-500
+          {% else %}
+            bg-blue-500
+          {% endif %}
+          transition transform duration-50 animate-fade-in-down">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
   <!-- Navigation Bar -->
   <nav class="bg-white/70 backdrop-blur-md shadow-sm sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -23,8 +45,8 @@
         <a href="{% url 'users:home' %}" class="hover:text-emerald-700">Home</a>
 
         {% if user.is_authenticated %}
-          <a href="{% url 'profile' %}" class="hover:text-emerald-700">Profile</a>
-          <a href="{% url 'logout' %}" class="text-red-600 hover:text-red-800">Logout</a>
+          <a href="{% url 'users:profile' %}" class="hover:text-emerald-700">Profile</a>
+          <a href="{% url 'users:logout' %}" class="text-red-600 hover:text-red-800">Logout</a>
         {% else %}
           <a href="{% url 'users:login' %}" class="hover:text-emerald-700">Login</a>
           <a href="{% url 'users:registration' %}" class="hover:text-emerald-700">Register</a>
