@@ -12,11 +12,11 @@ def registration(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect("profile")
+            return redirect("users:profile")
     else:
         form= SignUpForm()
-    return render(request, "user/registration.html", {"form" : form})
+    return render(request, "users/registration.html", {"form" : form})
 
 @login_required
 def profile(request):
-    return render(request, "user/profile.html")
+    return render(request, "users/profile.html")
