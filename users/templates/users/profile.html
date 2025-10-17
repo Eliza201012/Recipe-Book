@@ -13,9 +13,19 @@
     </a>
 
 
-    <a href="{% url 'users:logout' %}" class="block py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold transition">
-      Logout
-    </a>
+    {% if user.is_authenticated %}
+      <form action="{% url 'users:logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit"
+          class="py-3 px-6 bg-pink-400 hover:bg-pink-500 text-white rounded-xl font-semibold transition">
+            Logout
+        </button>
+    </form>
+    {% else %}
+      <p>You're not authorized.</p>
+      <a href="{% url 'users:login' %}">Login</a>
+    {% endif %}
+
   </div>
 </div>
 {% endblock %}
