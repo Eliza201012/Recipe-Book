@@ -7,10 +7,13 @@
   <p class="text-gray-700 mb-8">Welcome to your personal RecipeBook profile!</p>
 
   <div class="space-y-4">
-    <a href="#" class="block py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold transition">
-      Edit Profile
+    <a href="#"
+        class="block py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-semibold transition">
+        Edit Profile
     </a>
-    <a href="{% url 'logout' %}" class="block py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold transition">
+
+
+    <a href="{% url 'users:logout' %}" class="block py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold transition">
       Logout
     </a>
   </div>
