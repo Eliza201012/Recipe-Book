@@ -23,7 +23,7 @@ def recipe_detail(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
     return render(request, "recipes/recipe_detail.html", {"recipe" : recipe})
 
-# UPDATE
+# UPDATE (Recipe)
 def recipe_update(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
     if request.method == "POST":
@@ -35,10 +35,53 @@ def recipe_update(request, pk):
         form = RecipeForm(instance=Recipe)
     return render(request, "recipes/recipe_form.html", {"form" : form})
 
-# DELETE
+# DELETE (Recipe)
 def recipe_delete(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
     if request.method == "POST":
         recipe.delete()
         return redirect("recipes:recipe_list")
     return render(request, "recipes/recipe_confirm_delete.html", {"recipe" : recipe})
+
+
+
+# CREATE (Book)
+def create_book(request):
+    if request.method == "POST":
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("recipes:book_list")
+    else:
+        form = BookForm()
+    return render(request, "recipes/book_form.html", {"form" : form})
+
+# READ (Book list)
+def book_list(request):
+    books = Book.objects.all()
+    return render(request, "recipes/book_list.html", {"books" : books})
+
+# READ (Book detail)
+def book_detail(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    return render(request, "recipes/book_detail.html", {"book" : book})
+
+# UPDATE (Book)
+def book_update(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    if request.method == "POST":
+        form = BookForm(request.POST, instance=Book)
+        if form.is_valid():
+            form.save()
+            return redirect("recipes:book_list")
+    else:
+        form = BookForm(instance=Book)
+    return render(request, "recipes/book_form.html", {"form" : form})
+
+# DELETE (Book)
+def book_delete(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    if request.method == "POST":
+        book.delete()
+        return redirect("recipes:book_list")
+    return render(request, "recipes/book_confirm_delete.html", {"book" : book})
