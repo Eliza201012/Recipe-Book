@@ -31,3 +31,11 @@ class Book(models.Model):
     recipe = models.ForeignKey(Recipe, verbose_name="Recipe", on_delete=models.CASCADE, related_name="books")
     created_at = models.DateField(verbose_name="Created at", auto_now_add=True)
     updated_at = models.DateField(verbose_name="Updated at", auto_now=True)
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = "Book"
+        verbose_name_plural = "Books"
