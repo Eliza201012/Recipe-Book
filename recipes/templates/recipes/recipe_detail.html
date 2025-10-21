@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-3xl mx-auto mt-10 bg-white shadow-md rounded-xl p-8">
+  <h1 class="text-3xl font-bold mb-4 text-pink-600">{{ recipe.title }}</h1>
+  <p><strong>Category:</strong> {{ recipe.get_category_display }}</p>
+
+  <p class="mt-4">
+    <strong>Cooking time:</strong>
+    <input
+      type="time"
+      value="{{ recipe.cooking_time|time:'H:i' }}"
+      class="border border-gray-300 rounded-lg px-2 py-1 text-gray-800 w-24 focus:ring-2 focus:ring-pink-400 bg-white pointer-events-none select-none"
+    >
+  </p>
+
+  <p class="mt-4"><strong>Description:</strong> {{ recipe.description }}</p>
+  <p class="mt-4"><strong>Instructions:</strong> {{ recipe.instructions }}</p>
+
+  <div class="mt-6 flex gap-4">
+    <a href="{% url 'recipes:recipe_update' recipe.pk %}" class="bg-blue-500 text-white px-4 py-2 rounded-xl">Edit</a>
+    <a href="{% url 'recipes:recipe_delete' recipe.pk %}" class="bg-red-500 text-white px-4 py-2 rounded-xl">Delete</a>
+    <a href="{% url 'recipes:recipe_list' %}" class="bg-gray-300 px-4 py-2 rounded-xl">Back</a>
+  </div>
+</div>
+
+<!-- ✅ Flatpickr для гарного 24-годинного формату -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const input = document.querySelector("input[type='time']");
+    flatpickr(input, {
+      enableTime: true,
+      noCalendar: true,
+      dateFormat: "H:i",
+      time_24hr: true,
+      minuteIncrement: 1,
+      allowInput: false,
+      clickOpens: false  // 🔒 Вимикає взаємодію
+    });
+  });
+</script>
+{% endblock %}
