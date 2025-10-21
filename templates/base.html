@@ -2,70 +2,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}Recipe Book{% endblock %}</title>
-
-  <!-- Tailwind CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
-  <!-- Favicon -->
-  <link rel="icon" href="{% static 'images/recipe.png' %}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}My Recipes{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen flex flex-col bg-gradient-to-br from-amber-50 via-orange-100 to-emerald-100 font-sans text-gray-800">
+<body class="bg-pink-50 min-h-screen flex flex-col">
 
-    <!-- 🌸 Flash Messages -->
-  {% if messages %}
-    <div class="fixed top-5 right-5 space-y-2 z-50">
-      {% for message in messages %}
-        <div
-          class="px-6 py-3 rounded-xl shadow-lg text-white text-sm font-semibold
-          {% if message.tags == 'success' %}
-            bg-green-500
-          {% elif message.tags == 'error' %}
-            bg-red-500
-          {% elif message.tags == 'warning' %}
-            bg-yellow-500
-          {% else %}
-            bg-blue-500
-          {% endif %}
-          transition transform duration-50 animate-fade-in-down">
-          {{ message }}
-        </div>
-      {% endfor %}
+  <!-- 🌺 Navbar -->
+  <nav class="bg-white shadow-md py-4 px-6 flex justify-between items-center">
+    <!-- Left: navigation links -->
+    <div class="flex items-center space-x-4">
+      <a href="{% url 'recipes:recipe_list' %}" class="text-pink-600 font-bold text-xl hover:text-pink-700 transition">🍰 Recipes</a>
+      <a href="{% url 'recipes:book_list' %}" class="text-purple-600 font-semibold hover:text-purple-700 transition">📚 Books</a>
     </div>
-  {% endif %}
 
-  <!-- Navigation Bar -->
-  <nav class="bg-white/70 backdrop-blur-md shadow-sm sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="{% url 'users:home' %}" class="text-2xl font-bold text-emerald-700 hover:text-emerald-900 transition">RecipeBook</a>
-
-      <div class="space-x-6 text-lg">
-        <a href="{% url 'users:home' %}" class="hover:text-emerald-700">Home</a>
-
-        {% if user.is_authenticated %}
-          <a href="{% url 'users:profile' %}" class="hover:text-emerald-700">Profile</a>
-          <a href="{% url 'users:logout' %}" class="text-red-600 hover:text-red-800">Logout</a>
-        {% else %}
-          <a href="{% url 'users:login' %}" class="hover:text-emerald-700">Login</a>
-          <a href="{% url 'users:registration' %}" class="hover:text-emerald-700">Register</a>
-        {% endif %}
-      </div>
+    <!-- Right: authentication buttons -->
+    <div class="flex items-center space-x-3">
+      {% if user.is_authenticated %}
+        <span class="text-gray-600">Hi, <strong>{{ user.username }}</strong>!</span>
+        <a href="{% url 'users:profile' %}" class="btn-bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded-xl text-sm font-medium transition">Profile</a>
+        <form method="POST" action="{% url 'users:logout' %}">
+          {% csrf_token %}
+          <button type="submit"
+            class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded-xl text-sm font-medium transition">
+            Logout
+          </button>
+        </form>
+      {% else %}
+        <a href="{% url 'users:login' %}" 
+           class="bg-pink-500 hover:bg-pink-600 text-white px-3 py-1 rounded-xl text-sm font-medium transition">
+           Login
+        </a>
+        <a href="{% url 'users:registration' %}" 
+           class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-xl text-sm font-medium transition">
+           Register
+        </a>
+      {% endif %}
     </div>
   </nav>
 
-  <!-- Page Content -->
-  <main class="flex-grow flex items-center justify-center p-6">
-    {% block content %}
-    {% endblock %}
+  <!-- 🪄 Messages -->
+  <div class="container mx-auto mt-4 px-4">
+    {% if messages %}
+      {% for message in messages %}
+        <div 
+          class="mb-3 px-4 py-3 rounded-xl text-white {% if message.tags == 'success' %}bg-green-500{% elif message.tags == 'error' %}bg-red-500{% else %}bg-gray-500{% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <!-- 📦 Main Content -->
+  <main class="flex-grow container mx-auto px-4 py-6">
+    {% block content %}{% endblock %}
   </main>
 
-  <!-- Footer -->
-  <footer class="bg-white/70 backdrop-blur-md py-6 text-center text-gray-600 mt-10 border-t border-gray-200">
-    <p class="text-sm">
-      &copy; {{ year|default:2025 }} <span class="font-semibold text-emerald-700">RecipeBook</span> — Made with ❤️
-    </p>
+  <!-- 🌙 Footer -->
+  <footer class="bg-white text-center py-4 mt-8 text-gray-500 border-t">
+    <p>Made with ❤️ using Django & Tailwind</p>
   </footer>
 
 </body>
