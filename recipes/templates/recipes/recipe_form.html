@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto mt-10 bg-white shadow-md rounded-xl p-8">
+  <h1 class="text-2xl font-bold mb-6 text-pink-600 text-center">
+    {% if form.instance.pk %}Edit Recipe{% else %}Create Recipe{% endif %}
+  </h1>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="text-center mt-6">
+      <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white px-5 py-2 rounded-xl transition">
+        Save
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- ✅ Flatpickr JS & CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    flatpickr("input[type='time']", {
+      enableTime: true,
+      noCalendar: true,
+      dateFormat: "H:i",   // ✅ 24-hour format
+      time_24hr: true,     // ✅ Force 24-hour display
+      minuteIncrement: 1
+    });
+  });
+</script>
+{% endblock %}
