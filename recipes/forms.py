@@ -6,6 +6,7 @@ class RecipeForm(forms.ModelForm):
         model = Recipe
         fields = [
             "title",
+            "book",
             "cooking_time",
             "description",
             "instructions",
@@ -16,11 +17,17 @@ class RecipeForm(forms.ModelForm):
                 "class" : "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-400",
                 "placeholder" : "Enter recipe title"
             }),
-            "cooking_time" : forms.TimeInput(attrs={
-                "class" : "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-400",
-                "placeholder" : "00:30",
-                "type" : "time"
+            "book" : forms.Select(attrs={
+                "class" : "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-400"
             }),
+            "cooking_time": forms.TimeInput(
+                attrs={
+                    "class": "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-400",
+                    "placeholder": "01:30",
+                    "type": "time",
+                },
+                format="%H:%M",
+            ),
             "description" : forms.Textarea(attrs={
                 "class" : "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-400",
                 "rows" : 3,
@@ -40,13 +47,10 @@ class RecipeForm(forms.ModelForm):
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ["title", "recipe"]
+        fields = ["title"]
         widgets = {
             "title" : forms.TextInput(attrs={
                 "class" : "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-400",
                 "placeholder" : "Enter book title"
-            }),
-            "recipe" : forms.Select(attrs={
-                "class" : "w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-400"
             }),
         }
