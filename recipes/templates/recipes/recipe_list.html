@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto mt-10 bg-white shadow-md rounded-xl p-8">
+  <h1 class="text-3xl font-bold text-center text-pink-600 mb-8">All Recipes</h1>
+
+  <div class="text-center mb-6">
+    <a href="{% url 'recipes:create_recipe' %}" class="inline-block px-6 py-3 bg-pink-500 hover:bg-pink-600 text-white rounded-xl font-semibold transition">
+      + Add New Recipe
+    </a>
+  </div>
+
+  {% if recipes %}
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for recipe in recipes %}
+    <div class="border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-lg transition">
+      <h2 class="text-xl font-bold text-purple-600 mb-2">{{ recipe.title }}</h2>
+      <p class="text-gray-600 text-sm mb-2">
+        Category: <span class="font-medium">{{ recipe.get_category_display }}</span>
+      </p>
+      <p class="text-gray-600 text-sm mb-2">
+        Cooking time: 
+        <input 
+          type="time" 
+          value="{{ recipe.cooking_time|time:'H:i' }}" 
+          class="border border-gray-300 rounded-lg px-2 py-1 text-gray-800 w-24 focus:ring-2 focus:ring-pink-400" readonly>
+
+      </p>
+      <p class="text-gray-600 text-sm mb-4">
+        Created: {{ recipe.created_at }}
+      </p>
+
+      <div class="flex justify-between">
+        <a href="{% url 'recipes:recipe_detail' recipe.pk %}" class="text-pink-500 hover:text-pink-700 font-semibold">View</a>
+        <a href="{% url 'recipes:recipe_update' recipe.pk %}" class="text-purple-500 hover:text-purple-700 font-semibold">Edit</a>
+        <a href="{% url 'recipes:recipe_delete' recipe.pk %}" class="text-red-500 hover:text-red-700 font-semibold">Delete</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="text-center text-gray-500">No recipes found yet.</p>
+  {% endif %}
+</div>
+
+<!-- ✅ Flatpickr for consistent 24-hour display -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    flatpickr("input[type='time']", {
+      enableTime: true,
+      noCalendar: true,
+      dateFormat: "H:i",
+      time_24hr: true,
+      minuteIncrement: 1,
+      allowInput: true
+    });
+  });
+</script>
+{% endblock %}

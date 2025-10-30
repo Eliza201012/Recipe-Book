@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-lg mx-auto mt-20 bg-white shadow-md rounded-xl p-8 text-center">
+  <h1 class="text-2xl font-bold mb-4 text-red-600">Delete Recipe</h1>
+  <p>Are you sure you want to delete <strong>{{ recipe.title }}</strong>?</p>
+  <form method="post" class="mt-6">
+    {% csrf_token %}
+    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-xl">Yes, delete</button>
+    <a href="{% url 'recipes:recipe_list' %}" class="bg-gray-300 px-4 py-2 rounded-xl">Cancel</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Home | Recipe Book{% endblock %}
+
+{% block content %}
+<div class="flex flex-col items-center justify-center py-20 text-center">
+  <h1 class="text-5xl font-bold text-pink-600 mb-4">Welcome to Recipe Book 🍓</h1>
+  <p class="text-gray-600 text-lg mb-8 max-w-xl">
+    Discover, create, and organize your favorite recipes.  
+    Manage your personal cookbooks and keep every delicious idea in one place.
+  </p>
+
+  <div class="flex space-x-4">
+    <a href="{% url 'recipes:recipe_list' %}" 
+       class="px-6 py-3 bg-pink-500 hover:bg-pink-600 text-white rounded-xl font-semibold transition">
+       View Recipes
+    </a>
+    <a href="{% url 'recipes:book_list' %}" 
+       class="px-6 py-3 bg-purple-500 hover:bg-purple-600 text-white rounded-xl font-semibold transition">
+       View Books
+    </a>
+  </div>
+</div>
+{% endblock %}
