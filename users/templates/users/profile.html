@@ -2,30 +2,34 @@
 {% block title %}Profile — RecipeBook{% endblock %}
 
 {% block content %}
-<div class="bg-white/50 backdrop-blur-lg p-10 rounded-3xl shadow-xl w-full max-w-lg text-center">
-  <h1 class="text-4xl font-bold text-emerald-700 mb-4">Hello, {{ user.username }} 👋</h1>
-  <p class="text-gray-700 mb-8">Welcome to your personal RecipeBook profile!</p>
+<!-- 🌸 Центрований контейнер -->
+<div class="flex items-center justify-center min-h-[70vh]">
+  <div class="bg-white/60 backdrop-blur-lg p-10 rounded-3xl shadow-xl w-full max-w-lg text-center">
+    <h1 class="text-4xl font-bold text-emerald-700 mb-4">Hello, {{ user.username }} 👋</h1>
+    <p class="text-gray-700 mb-8">Welcome to your personal RecipeBook profile!</p>
 
-  <div class="space-y-4">
-    <a href="#"
-        class="block py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-semibold transition">
-        Edit Profile
-    </a>
+    <div class="space-y-4">
+      <a href="{% url 'users:update_profile' %}"
+          class="block py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-semibold transition">
+          Update Profile
+      </a>
 
-
-    {% if user.is_authenticated %}
-      <form action="{% url 'users:logout' %}" method="post">
-        {% csrf_token %}
-        <button type="submit"
-          class="py-3 px-6 bg-pink-400 hover:bg-pink-500 text-white rounded-xl font-semibold transition">
-            Logout
-        </button>
-    </form>
-    {% else %}
-      <p>You're not authorized.</p>
-      <a href="{% url 'users:login' %}">Login</a>
-    {% endif %}
-
+      {% if user.is_authenticated %}
+        <form action="{% url 'users:logout' %}" method="post">
+          {% csrf_token %}
+          <button type="submit"
+            class="w-full py-3 bg-pink-400 hover:bg-pink-500 text-white rounded-xl font-semibold transition">
+              Logout
+          </button>
+        </form>
+      {% else %}
+        <p class="text-gray-600">You're not authorized.</p>
+        <a href="{% url 'users:login' %}" 
+           class="inline-block mt-2 py-2 px-4 bg-pink-500 hover:bg-pink-600 text-white rounded-xl font-semibold transition">
+           Login
+        </a>
+      {% endif %}
+    </div>
   </div>
 </div>
 {% endblock %}
