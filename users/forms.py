@@ -8,14 +8,9 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ("username", "email", "password1", "password2")
 
-
 class UpdateUserForm(forms.ModelForm):
-    username = forms.CharField(max_length=100,
-                               required=True,
-                               widget=forms.TextInput(attrs={'class': 'form-control'}))
-    email = forms.EmailField(required=True,
-                             widget=forms.TextInput(attrs={'class': 'form-control'}))
-
+    username = forms.CharField(max_length=100, widget=forms.TextInput(attrs={"class":'form-control'}))
+    email = forms.EmailField(widget=forms.TextInput(attrs={'class':'form-control'}))
     class Meta:
         model = User
-        fields = ['username', 'email']
+        fields = ["username", "email"]
